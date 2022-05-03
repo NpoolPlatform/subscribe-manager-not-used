@@ -23,7 +23,7 @@ spec:
           - path: /api/subscribe-manager
             backend:
               serviceName: subscribe-manager
-              servicePort: 32759
+              servicePort: 50300
     - host: api.procyon.vip
       http: *http_rules
     - host: api.xpool.top

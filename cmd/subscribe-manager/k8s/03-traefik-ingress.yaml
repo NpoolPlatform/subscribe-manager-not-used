@@ -20,10 +20,53 @@ spec:
     - host: api.npool.top
       http: &http_rules
         paths:
-          - path: /api/subscribe-manager
+          - path: /api/subscribe-manager/version
             backend:
               serviceName: subscribe-manager
-              servicePort: 32759
+              servicePort: 50300
+          - path: /api/subscribe-manager/v1/create/email/subscriber
+            backend:
+              serviceName: subscribe-manager
+              servicePort: 50300
+    - host: api.procyon.vip
+      http: *http_rules
+    - host: api.xpool.top
+      http: *http_rules
+    - host: api.ohhash.com
+      http: *http_rules
+
+---
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: subscribe-manager-traefik-app-user-ingress
+  namespace: kube-system
+  annotations:
+    k8s.kuboard.cn/displayName: subscribe-manager-traefik-app-user
+    k8s.kuboard.cn/workload: subscribe-manager-traefik-app-user
+    kubernetes.io/ingress.class: "traefik-internet"
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-strip-subscribe-manager-prefix@kubernetescrd,
+                                                      kube-system-common-headers@kubernetescrd,
+                                                      kube-system-headers-appid-to-body@kubernetescrd,
+                                                      kube-system-headers-userid-to-body@kubernetescrd,
+                                                      kube-system-headers-app-login-token-to-body@kubernetescrd,
+                                                      kube-system-app-user-role-rbac-auth@kubernetescrd
+
+spec:
+  rules:
+    - host: api.npool.top
+      http: &http_rules
+        paths:
+          - path: /api/subscribe-manager/get/email/subscribers
+            backend:
+              serviceName: subscribe-manager
+              servicePort: 50300
+          - path: /api/subscribe-manager/get/app/email/subscribers
+            backend:
+              serviceName: subscribe-manager
+              servicePort: 50300
     - host: api.procyon.vip
       http: *http_rules
     - host: api.xpool.top
