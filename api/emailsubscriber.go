@@ -109,6 +109,11 @@ func emailSubscriberCondsToConds(conds cruder.FilterConds) (cruder.Conds, error)
 
 func (s *Server) GetEmailSubscribers(ctx context.Context, in *npool.GetEmailSubscribersRequest) (*npool.GetEmailSubscribersResponse, error) {
 	inConds := in.GetConds()
+
+	if inConds == nil {
+		inConds = map[string]*commonnpool.FilterCond{}
+	}
+
 	inConds[constant.EmailSubscriberFieldAppID] = &commonnpool.FilterCond{
 		Op:  cruder.EQ,
 		Val: structpb.NewStringValue(in.GetAppID()),
@@ -140,6 +145,11 @@ func (s *Server) GetEmailSubscribers(ctx context.Context, in *npool.GetEmailSubs
 
 func (s *Server) GetAppEmailSubscribers(ctx context.Context, in *npool.GetAppEmailSubscribersRequest) (*npool.GetAppEmailSubscribersResponse, error) {
 	inConds := in.GetConds()
+
+	if inConds == nil {
+		inConds = map[string]*commonnpool.FilterCond{}
+	}
+
 	inConds[constant.EmailSubscriberFieldAppID] = &commonnpool.FilterCond{
 		Op:  cruder.EQ,
 		Val: structpb.NewStringValue(in.GetTargetAppID()),
