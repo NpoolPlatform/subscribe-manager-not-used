@@ -8,7 +8,6 @@ require (
 	github.com/NpoolPlatform/go-service-framework v0.0.0-20220120091626-4e8035637592
 	github.com/NpoolPlatform/libent-cruder v0.0.0-20220503164840-0962cb617722
 	github.com/NpoolPlatform/message v0.0.0-20220503165256-540362bedc23
-	github.com/NpoolPlatform/stock-manager v0.0.0-20220502022154-6a87abd5cfda
 	github.com/badoux/checkmail v1.2.1
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/google/uuid v1.3.0

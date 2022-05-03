@@ -58,12 +58,12 @@ func TestCRUD(t *testing.T) {
 	}
 
 	subscriber1 := &npool.EmailSubscriber{
-		AppID:        uuid.New().String(),
-		EmailAddress: 1000,
+		AppID:        subscriber.AppID,
+		EmailAddress: "zhaoyubin@npool.cc",
 	}
 	subscriber2 := &npool.EmailSubscriber{
-		AppID:        uuid.New().String(),
-		EmailAddress: 1000,
+		AppID:        subscriber.AppID,
+		EmailAddress: "zhaoyubin1@npool.cc",
 	}
 
 	schema, err = New(context.Background(), nil)

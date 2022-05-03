@@ -27,6 +27,6 @@ func init() {
 func TestClient(t *testing.T) {
 	_, _ = GetEmailSubscribers(context.Background(), //nolint
 		cruder.NewFilterConds().
-			WithCond(constant.FieldAppID, cruder.EQ, structpb.NewStringValue(uuid.UUID{}.String())))
+			WithCond(constant.EmailSubscriberFieldAppID, cruder.EQ, structpb.NewStringValue(uuid.UUID{}.String())))
 	// Here won't pass test due to we always test with localhost
 }

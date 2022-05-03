@@ -96,7 +96,7 @@ func (s *EmailSubscriber) queryFromConds(conds cruder.Conds) (*ent.EmailSubscrib
 		case constant.EmailSubscriberFieldAppID:
 			id, err := cruder.AnyTypeUUID(v.Val)
 			if err != nil {
-				return nil, fmt.Errorf("invalid coin type id: %v", err)
+				return nil, fmt.Errorf("invalid app id: %v", err)
 			}
 			stm = stm.Where(emailsubscriber.AppID(id))
 		case constant.EmailSubscriberFieldEmailAddress:

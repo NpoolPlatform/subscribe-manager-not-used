@@ -19,7 +19,7 @@ func do(ctx context.Context, fn func(_ctx context.Context, cli npool.SubscribeMa
 
 	conn, err := grpc2.GetGRPCConn(constant.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, fmt.Errorf("fail get service template connection: %v", err)
+		return nil, fmt.Errorf("fail get email subscriber connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -28,13 +28,13 @@ func do(ctx context.Context, fn func(_ctx context.Context, cli npool.SubscribeMa
 	return fn(_ctx, cli)
 }
 
-func CreateEmailSubscribe(ctx context.Context, conds cruder.FilterConds) (*npool.EmailSubscriber, error) {
+func GetEmailSubscribers(ctx context.Context, conds cruder.FilterConds) ([]*npool.EmailSubscriber, error) {
 	info, err := do(ctx, func(_ctx context.Context, cli npool.SubscribeManagerClient) (cruder.Any, error) {
 		// DO RPC CALL HERE WITH conds PARAMETER
-		return &npool.EmailSubscriber{}, nil
+		return []*npool.EmailSubscriber{}, nil
 	})
 	if err != nil {
-		return nil, fmt.Errorf("fail get service template: %v", err)
+		return nil, fmt.Errorf("fail get email subscriber: %v", err)
 	}
-	return info.(*npool.EmailSubscriber), nil
+	return info.([]*npool.EmailSubscriber), nil
 }
