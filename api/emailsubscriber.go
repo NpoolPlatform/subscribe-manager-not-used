@@ -108,7 +108,13 @@ func emailSubscriberCondsToConds(conds cruder.FilterConds) (cruder.Conds, error)
 }
 
 func (s *Server) GetEmailSubscribers(ctx context.Context, in *npool.GetEmailSubscribersRequest) (*npool.GetEmailSubscribersResponse, error) {
-	conds, err := emailSubscriberCondsToConds(in.GetConds())
+	inConds := in.GetConds()
+	inConds[constant.EmailSubscriberFieldAppID] = &commonnpool.FilterCond{
+		Op:  cruder.EQ,
+		Val: structpb.NewStringValue(in.GetAppID()),
+	}
+
+	conds, err := emailSubscriberCondsToConds(inConds)
 	if err != nil {
 		logger.Sugar().Errorf("invalid email subscriber fields: %v", err)
 		return &npool.GetEmailSubscribersResponse{}, status.Error(codes.Internal, err.Error())
@@ -139,7 +145,7 @@ func (s *Server) GetAppEmailSubscribers(ctx context.Context, in *npool.GetAppEma
 		Val: structpb.NewStringValue(in.GetTargetAppID()),
 	}
 
-	conds, err := emailSubscriberCondsToConds(in.GetConds())
+	conds, err := emailSubscriberCondsToConds(inConds)
 	if err != nil {
 		logger.Sugar().Errorf("invalid email subscriber fields: %v", err)
 		return &npool.GetAppEmailSubscribersResponse{}, status.Error(codes.Internal, err.Error())
