@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/NpoolPlatform/libent-cruder/pkg/cruder"
-	constant "github.com/NpoolPlatform/service-template/pkg/const"
-	"github.com/NpoolPlatform/service-template/pkg/test-init" //nolint
+	constant "github.com/NpoolPlatform/subscribe-manager/pkg/const"
+	"github.com/NpoolPlatform/subscribe-manager/pkg/test-init" //nolint
 	"google.golang.org/protobuf/types/known/structpb"
 
 	"github.com/google/uuid"
@@ -25,8 +25,8 @@ func init() {
 }
 
 func TestClient(t *testing.T) {
-	_, _ = GetServiceTemplateInfoOnly(context.Background(), //nolint
+	_, _ = GetEmailSubscribers(context.Background(), //nolint
 		cruder.NewFilterConds().
-			WithCond(constant.FieldID, cruder.EQ, structpb.NewStringValue(uuid.UUID{}.String())))
+			WithCond(constant.FieldAppID, cruder.EQ, structpb.NewStringValue(uuid.UUID{}.String())))
 	// Here won't pass test due to we always test with localhost
 }

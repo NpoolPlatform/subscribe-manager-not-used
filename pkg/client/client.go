@@ -8,12 +8,12 @@ import (
 	grpc2 "github.com/NpoolPlatform/go-service-framework/pkg/grpc"
 
 	"github.com/NpoolPlatform/libent-cruder/pkg/cruder"
-	npool "github.com/NpoolPlatform/message/npool/servicetmpl"
+	npool "github.com/NpoolPlatform/message/npool/subscribemgr"
 
-	constant "github.com/NpoolPlatform/service-template/pkg/message/const"
+	constant "github.com/NpoolPlatform/subscribe-manager/pkg/message/const"
 )
 
-func do(ctx context.Context, fn func(_ctx context.Context, cli npool.ServiceTemplateClient) (cruder.Any, error)) (cruder.Any, error) {
+func do(ctx context.Context, fn func(_ctx context.Context, cli npool.SubscribeManagerClient) (cruder.Any, error)) (cruder.Any, error) {
 	_ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
 
@@ -23,18 +23,18 @@ func do(ctx context.Context, fn func(_ctx context.Context, cli npool.ServiceTemp
 	}
 	defer conn.Close()
 
-	cli := npool.NewServiceTemplateClient(conn)
+	cli := npool.NewSubscribeManagerClient(conn)
 
 	return fn(_ctx, cli)
 }
 
-func GetServiceTemplateInfoOnly(ctx context.Context, conds cruder.FilterConds) (*npool.ServiceTemplateInfo, error) {
-	info, err := do(ctx, func(_ctx context.Context, cli npool.ServiceTemplateClient) (cruder.Any, error) {
+func CreateEmailSubscribe(ctx context.Context, conds cruder.FilterConds) (*npool.EmailSubscriber, error) {
+	info, err := do(ctx, func(_ctx context.Context, cli npool.SubscribeManagerClient) (cruder.Any, error) {
 		// DO RPC CALL HERE WITH conds PARAMETER
-		return &npool.ServiceTemplateInfo{}, nil
+		return &npool.EmailSubscriber{}, nil
 	})
 	if err != nil {
 		return nil, fmt.Errorf("fail get service template: %v", err)
 	}
-	return info.(*npool.ServiceTemplateInfo), nil
+	return info.(*npool.EmailSubscriber), nil
 }

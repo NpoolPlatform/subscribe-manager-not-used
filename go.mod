@@ -1,4 +1,4 @@
-module github.com/NpoolPlatform/service-template
+module github.com/NpoolPlatform/subscribe-manager
 
 go 1.17
 
@@ -6,8 +6,10 @@ require (
 	entgo.io/ent v0.10.1
 	github.com/NpoolPlatform/api-manager v0.0.0-20220121051827-18c807c114dc
 	github.com/NpoolPlatform/go-service-framework v0.0.0-20220120091626-4e8035637592
-	github.com/NpoolPlatform/libent-cruder v0.0.0-20220501160538-4d73846f01f1
-	github.com/NpoolPlatform/message v0.0.0-20220503103721-8c9cd58d1323
+	github.com/NpoolPlatform/libent-cruder v0.0.0-20220503164840-0962cb617722
+	github.com/NpoolPlatform/message v0.0.0-20220503165256-540362bedc23
+	github.com/NpoolPlatform/stock-manager v0.0.0-20220502022154-6a87abd5cfda
+	github.com/badoux/checkmail v1.2.1
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/google/uuid v1.3.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.8.0

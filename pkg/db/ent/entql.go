@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"github.com/NpoolPlatform/service-template/pkg/db/ent/empty"
+	"github.com/NpoolPlatform/subscribe-manager/pkg/db/ent/emailsubscriber"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -16,15 +16,21 @@ var schemaGraph = func() *sqlgraph.Schema {
 	graph := &sqlgraph.Schema{Nodes: make([]*sqlgraph.Node, 1)}
 	graph.Nodes[0] = &sqlgraph.Node{
 		NodeSpec: sqlgraph.NodeSpec{
-			Table:   empty.Table,
-			Columns: empty.Columns,
+			Table:   emailsubscriber.Table,
+			Columns: emailsubscriber.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
-				Column: empty.FieldID,
+				Type:   field.TypeUUID,
+				Column: emailsubscriber.FieldID,
 			},
 		},
-		Type:   "Empty",
-		Fields: map[string]*sqlgraph.FieldSpec{},
+		Type: "EmailSubscriber",
+		Fields: map[string]*sqlgraph.FieldSpec{
+			emailsubscriber.FieldCreatedAt:    {Type: field.TypeUint32, Column: emailsubscriber.FieldCreatedAt},
+			emailsubscriber.FieldUpdatedAt:    {Type: field.TypeUint32, Column: emailsubscriber.FieldUpdatedAt},
+			emailsubscriber.FieldDeletedAt:    {Type: field.TypeUint32, Column: emailsubscriber.FieldDeletedAt},
+			emailsubscriber.FieldAppID:        {Type: field.TypeUUID, Column: emailsubscriber.FieldAppID},
+			emailsubscriber.FieldEmailAddress: {Type: field.TypeString, Column: emailsubscriber.FieldEmailAddress},
+		},
 	}
 	return graph
 }()
@@ -36,32 +42,32 @@ type predicateAdder interface {
 }
 
 // addPredicate implements the predicateAdder interface.
-func (eq *EmptyQuery) addPredicate(pred func(s *sql.Selector)) {
-	eq.predicates = append(eq.predicates, pred)
+func (esq *EmailSubscriberQuery) addPredicate(pred func(s *sql.Selector)) {
+	esq.predicates = append(esq.predicates, pred)
 }
 
-// Filter returns a Filter implementation to apply filters on the EmptyQuery builder.
-func (eq *EmptyQuery) Filter() *EmptyFilter {
-	return &EmptyFilter{eq}
+// Filter returns a Filter implementation to apply filters on the EmailSubscriberQuery builder.
+func (esq *EmailSubscriberQuery) Filter() *EmailSubscriberFilter {
+	return &EmailSubscriberFilter{esq}
 }
 
 // addPredicate implements the predicateAdder interface.
-func (m *EmptyMutation) addPredicate(pred func(s *sql.Selector)) {
+func (m *EmailSubscriberMutation) addPredicate(pred func(s *sql.Selector)) {
 	m.predicates = append(m.predicates, pred)
 }
 
-// Filter returns an entql.Where implementation to apply filters on the EmptyMutation builder.
-func (m *EmptyMutation) Filter() *EmptyFilter {
-	return &EmptyFilter{m}
+// Filter returns an entql.Where implementation to apply filters on the EmailSubscriberMutation builder.
+func (m *EmailSubscriberMutation) Filter() *EmailSubscriberFilter {
+	return &EmailSubscriberFilter{m}
 }
 
-// EmptyFilter provides a generic filtering capability at runtime for EmptyQuery.
-type EmptyFilter struct {
+// EmailSubscriberFilter provides a generic filtering capability at runtime for EmailSubscriberQuery.
+type EmailSubscriberFilter struct {
 	predicateAdder
 }
 
 // Where applies the entql predicate on the query filter.
-func (f *EmptyFilter) Where(p entql.P) {
+func (f *EmailSubscriberFilter) Where(p entql.P) {
 	f.addPredicate(func(s *sql.Selector) {
 		if err := schemaGraph.EvalP(schemaGraph.Nodes[0].Type, p, s); err != nil {
 			s.AddError(err)
@@ -69,7 +75,32 @@ func (f *EmptyFilter) Where(p entql.P) {
 	})
 }
 
-// WhereID applies the entql int predicate on the id field.
-func (f *EmptyFilter) WhereID(p entql.IntP) {
-	f.Where(p.Field(empty.FieldID))
+// WhereID applies the entql [16]byte predicate on the id field.
+func (f *EmailSubscriberFilter) WhereID(p entql.ValueP) {
+	f.Where(p.Field(emailsubscriber.FieldID))
+}
+
+// WhereCreatedAt applies the entql uint32 predicate on the created_at field.
+func (f *EmailSubscriberFilter) WhereCreatedAt(p entql.Uint32P) {
+	f.Where(p.Field(emailsubscriber.FieldCreatedAt))
+}
+
+// WhereUpdatedAt applies the entql uint32 predicate on the updated_at field.
+func (f *EmailSubscriberFilter) WhereUpdatedAt(p entql.Uint32P) {
+	f.Where(p.Field(emailsubscriber.FieldUpdatedAt))
+}
+
+// WhereDeletedAt applies the entql uint32 predicate on the deleted_at field.
+func (f *EmailSubscriberFilter) WhereDeletedAt(p entql.Uint32P) {
+	f.Where(p.Field(emailsubscriber.FieldDeletedAt))
+}
+
+// WhereAppID applies the entql [16]byte predicate on the app_id field.
+func (f *EmailSubscriberFilter) WhereAppID(p entql.ValueP) {
+	f.Where(p.Field(emailsubscriber.FieldAppID))
+}
+
+// WhereEmailAddress applies the entql string predicate on the email_address field.
+func (f *EmailSubscriberFilter) WhereEmailAddress(p entql.StringP) {
+	f.Where(p.Field(emailsubscriber.FieldEmailAddress))
 }

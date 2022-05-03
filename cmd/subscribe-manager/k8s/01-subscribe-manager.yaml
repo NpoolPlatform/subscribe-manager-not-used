@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-template
+  name: subscribe-manager
   namespace: kube-system
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: service-template
+      app: subscribe-manager
   template:
     metadata:
       labels:
-        app: service-template
+        app: subscribe-manager
     spec:
       containers:
-      - name: service-template
-        image: uhub.service.ucloud.cn/entropypool/service-template:latest
+      - name: subscribe-manager
+        image: uhub.service.ucloud.cn/entropypool/subscribe-manager:latest
         imagePullPolicy: Always
         env:
         - name: ENV_ENVIRONMENT_TARGET
@@ -42,12 +42,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-template
+  name: subscribe-manager
   namespace: kube-system
 spec:
   ports:
-  - name: api
-    port: 32759
-    targetPort: 32759
+  - name: http
+    port: 50300
+    targetPort: 50300
+  - name: grpc
+    port: 50301
+    targetPort: 50301
+  - name: prometheus
+    port: 50302
+    targetPort: 50302
   selector:
-    app: service-template
+    app: subscribe-manager

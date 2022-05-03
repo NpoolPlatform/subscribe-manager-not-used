@@ -2,7 +2,54 @@
 
 package runtime
 
-// The schema-stitching logic is generated in github.com/NpoolPlatform/service-template/pkg/db/ent/runtime.go
+import (
+	"context"
+
+	"github.com/NpoolPlatform/subscribe-manager/pkg/db/ent/emailsubscriber"
+	"github.com/NpoolPlatform/subscribe-manager/pkg/db/ent/schema"
+	"github.com/google/uuid"
+
+	"entgo.io/ent"
+	"entgo.io/ent/privacy"
+)
+
+// The init function reads all schema descriptors with runtime code
+// (default values, validators, hooks and policies) and stitches it
+// to their package variables.
+func init() {
+	emailsubscriberMixin := schema.EmailSubscriber{}.Mixin()
+	emailsubscriber.Policy = privacy.NewPolicies(emailsubscriberMixin[0], schema.EmailSubscriber{})
+	emailsubscriber.Hooks[0] = func(next ent.Mutator) ent.Mutator {
+		return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+			if err := emailsubscriber.Policy.EvalMutation(ctx, m); err != nil {
+				return nil, err
+			}
+			return next.Mutate(ctx, m)
+		})
+	}
+	emailsubscriberMixinFields0 := emailsubscriberMixin[0].Fields()
+	_ = emailsubscriberMixinFields0
+	emailsubscriberFields := schema.EmailSubscriber{}.Fields()
+	_ = emailsubscriberFields
+	// emailsubscriberDescCreatedAt is the schema descriptor for created_at field.
+	emailsubscriberDescCreatedAt := emailsubscriberMixinFields0[0].Descriptor()
+	// emailsubscriber.DefaultCreatedAt holds the default value on creation for the created_at field.
+	emailsubscriber.DefaultCreatedAt = emailsubscriberDescCreatedAt.Default.(func() uint32)
+	// emailsubscriberDescUpdatedAt is the schema descriptor for updated_at field.
+	emailsubscriberDescUpdatedAt := emailsubscriberMixinFields0[1].Descriptor()
+	// emailsubscriber.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	emailsubscriber.DefaultUpdatedAt = emailsubscriberDescUpdatedAt.Default.(func() uint32)
+	// emailsubscriber.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	emailsubscriber.UpdateDefaultUpdatedAt = emailsubscriberDescUpdatedAt.UpdateDefault.(func() uint32)
+	// emailsubscriberDescDeletedAt is the schema descriptor for deleted_at field.
+	emailsubscriberDescDeletedAt := emailsubscriberMixinFields0[2].Descriptor()
+	// emailsubscriber.DefaultDeletedAt holds the default value on creation for the deleted_at field.
+	emailsubscriber.DefaultDeletedAt = emailsubscriberDescDeletedAt.Default.(func() uint32)
+	// emailsubscriberDescID is the schema descriptor for id field.
+	emailsubscriberDescID := emailsubscriberFields[0].Descriptor()
+	// emailsubscriber.DefaultID holds the default value on creation for the id field.
+	emailsubscriber.DefaultID = emailsubscriberDescID.Default.(func() uuid.UUID)
+}
 
 const (
 	Version = "v0.10.1"                                         // Version of ent codegen.

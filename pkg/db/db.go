@@ -7,13 +7,13 @@ import (
 
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 
-	"github.com/NpoolPlatform/service-template/pkg/db/ent"
+	"github.com/NpoolPlatform/subscribe-manager/pkg/db/ent"
 
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
 	"github.com/NpoolPlatform/go-service-framework/pkg/mysql"
 
-	_ "github.com/NpoolPlatform/service-template/pkg/db/ent/runtime" //nolint
+	_ "github.com/NpoolPlatform/subscribe-manager/pkg/db/ent/runtime" //nolint
 )
 
 func client() (*ent.Client, error) {

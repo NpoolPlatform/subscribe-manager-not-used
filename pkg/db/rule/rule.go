@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"entgo.io/ent/entql"
-	"github.com/NpoolPlatform/service-template/pkg/db/ent/privacy"
+	"github.com/NpoolPlatform/subscribe-manager/pkg/db/ent/privacy"
 )
 
 func FilterTimeRule() privacy.QueryMutationRule {

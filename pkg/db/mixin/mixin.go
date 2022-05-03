@@ -2,8 +2,8 @@ package mixin
 
 import (
 	"entgo.io/ent"
-	"github.com/NpoolPlatform/service-template/pkg/db/ent/privacy"
-	"github.com/NpoolPlatform/service-template/pkg/db/rule"
+	"github.com/NpoolPlatform/subscribe-manager/pkg/db/ent/privacy"
+	"github.com/NpoolPlatform/subscribe-manager/pkg/db/rule"
 )
 
 func (TimeMixin) Mixin() []ent.Mixin {

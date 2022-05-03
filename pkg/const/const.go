@@ -1,5 +1,7 @@
 package constant
 
 const (
-	FieldID = "ID"
+	FieldID                          = "ID"
+	EmailSubscriberFieldAppID        = "AppID"
+	EmailSubscriberFieldEmailAddress = "EmailAddress"
 )
