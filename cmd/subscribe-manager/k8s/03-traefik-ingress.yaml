@@ -59,11 +59,11 @@ spec:
     - host: api.npool.top
       http: &http_rules
         paths:
-          - path: /api/subscribe-manager/get/email/subscribers
+          - path: /api/subscribe-manager/v1/get/email/subscribers
             backend:
               serviceName: subscribe-manager
               servicePort: 50300
-          - path: /api/subscribe-manager/get/app/email/subscribers
+          - path: /api/subscribe-manager/v1/get/app/email/subscribers
             backend:
               serviceName: subscribe-manager
               servicePort: 50300
